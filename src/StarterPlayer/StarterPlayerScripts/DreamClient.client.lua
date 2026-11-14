@@ -32,8 +32,8 @@ local fade = Instance.new("Frame")
 fade.Size = UDim2.fromScale(1,1) fade.BackgroundColor3 = Color3.new(1,1,1) fade.BackgroundTransparency = 1 fade.BorderSizePixel = 0 fade.ZIndex = 5 fade.Parent = gui
 local title = label{Size=UDim2.new(1,0,0,70), Position=UDim2.new(0,0,0.32,0), Font=Enum.Font.FredokaOne, TextSize=58, Text="", TextTransparency=1, ZIndex=6, TextStrokeTransparency=1, TextStrokeColor3=Color3.fromRGB(120,90,160)}
 local sub = label{Size=UDim2.new(1,0,0,36), Position=UDim2.new(0,0,0.32,72), Font=Enum.Font.FredokaOne, TextSize=26, Text="", TextTransparency=1, ZIndex=6, TextStrokeTransparency=1, TextStrokeColor3=Color3.fromRGB(120,90,160)}
-local objective = label{Size=UDim2.new(0,460,0,32), Position=UDim2.new(0,24,0,70), Font=Enum.Font.FredokaOne, TextSize=22, TextXAlignment=Enum.TextXAlignment.Left, Text="", TextStrokeTransparency=0.4, TextStrokeColor3=Color3.fromRGB(90,60,120)}
-local popup = label{Size=UDim2.new(1,0,0,40), Position=UDim2.new(0,0,0.68,0), Font=Enum.Font.FredokaOne, TextSize=30, Text="", TextTransparency=1, TextColor3=Color3.fromRGB(255,240,170), TextStrokeTransparency=1, TextStrokeColor3=Color3.fromRGB(110,80,150)}
+local objective = label{Size=UDim2.new(1,-48,0,56), Position=UDim2.new(0,24,0,70), Font=Enum.Font.FredokaOne, TextSize=22, TextXAlignment=Enum.TextXAlignment.Left, TextYAlignment=Enum.TextYAlignment.Top, Text="", TextStrokeTransparency=0.4, TextStrokeColor3=Color3.fromRGB(90,60,120)}
+local popup = label{Size=UDim2.new(1,-40,0,100), Position=UDim2.new(0,20,0.66,0), Font=Enum.Font.FredokaOne, TextSize=28, TextYAlignment=Enum.TextYAlignment.Top, Text="", TextTransparency=1, TextColor3=Color3.fromRGB(255,240,170), TextStrokeTransparency=1, TextStrokeColor3=Color3.fromRGB(110,80,150)}
 
 local function tween(obj, t, props, style)
 	local tw = TweenService:Create(obj, TweenInfo.new(t, style or Enum.EasingStyle.Sine), props)
@@ -67,6 +67,13 @@ local PRESETS = {
 	{Clock=17.6, Bright=1.8, Amb={130,100,90},  Out={200,150,120}, Atm={0.40,{255,190,150},{200,120,120},2.2}, Sat=0.10, Tint={255,240,225}, Cloud={0.40,{255,200,170}}},
 	{Clock=17.9, Bright=2.0, Amb={150,115,95},  Out={225,165,125}, Atm={0.36,{255,195,150},{235,140,110},2.0}, Sat=0.12, Tint={255,236,215}, Cloud={0.50,{255,190,150}}},
 	{Clock=23.5, Bright=0.7, Amb={48,50,64},    Out={62,66,88},    Atm={0.45,{40,45,62},{20,22,36},1.2},     Sat=-0.35, Tint={210,220,235}, Cloud={0.60,{60,60,75}}},
+	{Clock=9.3,  Bright=2.4, Amb={150,155,150}, Out={190,200,190}, Atm={0.33,{230,238,240},{210,225,235},1.4}, Sat=0.10, Tint={255,250,240}, Cloud={0.40,{255,255,255}}},
+	{Clock=14.8, Bright=2.5, Amb={160,150,140}, Out={210,200,185}, Atm={0.30,{245,235,225},{230,210,200},1.3}, Sat=0.18, Tint={255,248,236}, Cloud={0.35,{255,255,255}}},
+	{Clock=23.0, Bright=0.3, Amb={64,70,80},    Out={38,42,55},    Atm={0.20,{40,48,65},{20,24,36},0.6},      Sat=-0.3,  Tint={215,228,235}, Cloud={0.80,{60,65,80}}},
+	{Clock=0.6,  Bright=0.6, Amb={72,76,96},    Out={55,60,80},    Atm={0.30,{45,50,70},{25,28,40},1.2},      Sat=-0.25, Tint={205,215,240}, Cloud={0.70,{60,65,80}}},
+	{Clock=0.3,  Bright=0.5, Amb={64,68,92},    Out={50,56,80},    Atm={0.32,{40,45,70},{20,24,40},1.0},      Sat=-0.2,  Tint={200,210,240}, Cloud={0.60,{50,55,75}}},
+	{Clock=18.4, Bright=1.6, Amb={150,120,130}, Out={190,150,160}, Atm={0.30,{255,190,170},{190,130,170},1.2}, Sat=0.18, Tint={255,236,225}, Cloud={0.40,{255,185,175}}},
+	{Clock=23.2, Bright=0.4, Amb={70,74,92},    Out={40,44,60},    Atm={0.42,{35,40,55},{18,20,30},1.4},      Sat=-0.3,  Tint={200,210,230}, Cloud={0.90,{45,48,60}}},
 }
 local function rgb(t) return Color3.fromRGB(t[1], t[2], t[3]) end
 local function applyLook(i)
@@ -371,6 +378,14 @@ end
 missions[5] = function(D) runModule("Nightmare", 5, D) end   -- the house nightmare
 missions[6] = function(D) runModule("Playground", 6, D) end  -- Golden Hour: the playground
 missions[7] = function(D) runModule("School", 7, D) end      -- After Hours: the school
+missions[8] = function(D) runModule("Lake", 8, D) end        -- The Lake Trip: a peaceful morning
+missions[9] = function(D) runModule("Birthday", 9, D) end    -- The Birthday: a party in the living room
+missions[10] = function(D) runModule("Hospital", 10, D) end  -- Visiting Hours: the hospital
+-- Chapter 2 --------------------------------------------------
+missions[11] = function(D) runModule("TooBig", 11, D) end    -- Too Big: your room, but you're small
+missions[12] = function(D) runModule("PlaygroundNight", 12, D) end -- Playground at Night: hide and seek
+missions[13] = function(D) runModule("Fair", 13, D) end      -- The Summer Fair: a happy one
+missions[14] = function(D) runModule("CarRain", 14, D) end   -- The Car in the Rain
 
 ------------------------------------------------------------ entering a dream
 remote.OnClientEvent:Connect(function(action, i)
@@ -389,12 +404,20 @@ remote.OnClientEvent:Connect(function(action, i)
 				task.wait(0.8)
 				if currentIndex ~= i then return end
 				title.TextColor3 = Color3.new(1, 1, 1) sub.TextColor3 = Color3.new(1, 1, 1)
-				titleCard(i == 5 and "Home" or ("Dream " .. i), D:GetAttribute("Title") or "")
+				titleCard(i == 5 and "Home" or (i > 10 and ("Chapter 2 \u{b7} Dream " .. (i - 10)) or ("Dream " .. i)), D:GetAttribute("Title") or "")
 				-- skipped ahead (admin panel) while the title was showing: don't start this dream's mission
 				if currentIndex ~= i then return end
 				if missions[i] then missions[i](D) end
 			end)
 		end
+	elseif action == "Leave" then
+		-- waking up (Chapter 2): no dream is active any more; its module cleans itself up
+		currentIndex, currentDream = nil, nil
+		setObjective("")
+		fade.BackgroundTransparency = 1
+		workspace.Gravity = 196.2
+		local hum = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+		if hum then hum.WalkSpeed = 16 hum.JumpPower = 50 end
 	elseif action == "End" then
 		titleCard("To be continued...", "")
 	end

@@ -81,11 +81,15 @@ local nextBtn = button(panel, "⏭  Next stage", Color3.fromRGB(150, 40, 60))
 nextBtn.LayoutOrder = 1
 nextBtn.Activated:Connect(function() remote:FireServer("Next") setOpen(false) end)
 
-for i = 1, 10 do
+local ch2Btn = button(panel, "\u{2600}  Chapter 2 \u{2014} Waking Up", Color3.fromRGB(70, 60, 120))
+ch2Btn.LayoutOrder = 2
+ch2Btn.Activated:Connect(function() remote:FireServer("WakeUp") setOpen(false) end)
+
+for i = 1, 40 do
 	local d = Dreams:FindFirstChild("Dream" .. i)
 	if not d then break end
 	local b = button(panel, ("Dream %d — %s"):format(i, d:GetAttribute("Title") or ""))
-	b.LayoutOrder = 1 + i
+	b.LayoutOrder = 2 + i
 	b.TextTruncate = Enum.TextTruncate.AtEnd
 	b.Activated:Connect(function() remote:FireServer("Goto", i) setOpen(false) end)
 end

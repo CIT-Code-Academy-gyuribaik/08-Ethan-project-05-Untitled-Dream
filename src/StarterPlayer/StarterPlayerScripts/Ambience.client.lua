@@ -29,6 +29,12 @@ local AREAS = {
 	Dream5 = {loop(133505549946221, 0.3)},                                     -- gentle lullaby (daytime only)
 	Dream6 = {loop(139022063348798, 0.3), loop(9125742262, 0.06)},            -- slow strings, faint air
 	Dream7 = {loop(9112795463, 0.25)},                                         -- empty building hum
+	Dream8 = {loop(1842361805, 0.35), loop(9112865468, 0.25)},               -- acoustic guitar + lake water and birds
+	Dream9 = {loop(9043586747, 0.4), loop(9112739128, 0.25)},                -- sparse piano ("Remembering You") + quiet room after rain
+	Dream10 = {loop(9112825488, 0.22), loop(9112853422, 0.14)},               -- hospital machines hum + rain outside
+	Dream11 = {loop(9112853422, 0.22), loop(9112795463, 0.12)},               -- rain on a giant window + a low hum
+	Dream12 = {loop(9112764573, 0.35), loop(9112795463, 0.08)},               -- crickets at night + a faint hum
+	Dream13 = {loop(93244948579023, 0.35), loop(9112821242, 0.1)},            -- happy music box + a soft crowd murmur
 }
 
 local starts = {}

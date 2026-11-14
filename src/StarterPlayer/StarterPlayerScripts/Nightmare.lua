@@ -341,7 +341,7 @@ function M.run(ctx, D)
 	setp(fire, {Transparency = 1})
 	workspace.Gravity = 196.2
 	local function nightHumanoid()
-		local h = humOf() if h then h.WalkSpeed = 14 h.JumpPower = 38 end
+		local h = humOf() if h then h.WalkSpeed = 16 h.JumpPower = 38 end
 	end
 	nightHumanoid()
 	conn(player.CharacterAdded:Connect(function() task.wait(0.5) nightHumanoid() end))
@@ -574,12 +574,12 @@ function M.run(ctx, D)
 		local eye = head.Position
 		local to = ph.Position - eye
 		local d = to.Magnitude
-		if d > (flashOn and 60 or 40) then return false end
+		if d > (flashOn and 42 or 28) then return false end
 		if d > 6 then
 			local look = root.CFrame.LookVector
 			local flatTo = Vector3.new(to.X, 0, to.Z)
 			local facing = flatTo.Magnitude > 0 and look:Dot(flatTo.Unit) or 1
-			if facing < 0.4 and not (flashOn and d < 25) then return false end
+			if facing < 0.55 and not (flashOn and d < 15) then return false end
 		end
 		return clearLine(eye, ph.Position)
 	end
@@ -799,9 +799,9 @@ function M.run(ctx, D)
 		local far = phase == "C" and Vector3.new(11968, 501, -12) or farthestPatrolFrom(cp)
 		placeDad(far, Vector3.new(12000, far.Y, 0))
 		waypoints = nil
-		graceUntil = os.clock() + (phase == "C" and 2.5 or 6)
+		graceUntil = os.clock() + (phase == "C" and 4 or 8)
 		setState(phase == "C" and "hunt" or "patrol")
-		waitUntil = os.clock() + (phase == "C" and 2.5 or 3)
+		waitUntil = os.clock() + (phase == "C" and 4 or 4)
 		frozen = false
 		tween(red, 1.5, {BackgroundTransparency = 1})
 		if caughtCount == 1 and phase ~= "C" then
@@ -822,7 +822,7 @@ function M.run(ctx, D)
 		for _, p in lamps do p.Color = Color3.fromRGB(255, 40, 30) end
 		if cc then cc.TintColor = Color3.fromRGB(255, 180, 180) end
 		graceUntil = 0
-		waitUntil = os.clock() + 1.5
+		waitUntil = os.clock() + 3
 		setState("hunt")
 		task.spawn(function()
 			while alive and phase == "C" and not escaped do
@@ -877,6 +877,7 @@ function M.run(ctx, D)
 		lastSeen = playerFloor() lastSeenAt = os.clock()
 		if state ~= "chase" and state ~= "hunt" then
 			setState("chase")
+			waitUntil = os.clock() + 1.0 -- he needs a moment to react: a head start
 			dadSay(pick(LINES.spot), 2.5)
 			task.delay(1.2, function() narrate("run", "Your legs move before you decide to run. Like they've done this before.", 4) end)
 			red.BackgroundColor3 = Color3.fromRGB(150, 0, 0) red.BackgroundTransparency = 0.75
@@ -935,18 +936,18 @@ function M.run(ctx, D)
 		if sees then spotted() end
 
 		-- caught?
-		if not hidden and flatD < 3.4 and math.abs(d.Y) < 5 and (state == "chase" or state == "hunt" or state == "search" or sees) and now > graceUntil then
+		if not hidden and flatD < 3 and math.abs(d.Y) < 5 and (state == "chase" or state == "hunt" or state == "search" or sees) and now > graceUntil then
 			task.spawn(caught)
 			continue
 		end
 		if now < waitUntil then continue end
 
 		if state == "hunt" then
-			speed = 12.6 + math.sin(now * 0.9) * 1.2
+			speed = 11.5 + math.sin(now * 0.9) * 0.8
 			if not pathBusy then goTo(playerFloor() or hrp.Position) end
 			if math.random() < 0.025 then dadSay(pick(LINES.hunt), 2.5) end
 		elseif state == "chase" then
-			speed = 12 + math.sin(now * 1.3) * 1.5 -- drunk: uneven
+			speed = 10.5 + math.sin(now * 1.3) * 1.2 -- drunk: uneven
 			if hidden then
 				-- did he see you get in?
 				if now - lastSeenAt < 1.2 and flatD < 16 then
@@ -960,7 +961,7 @@ function M.run(ctx, D)
 				end
 			elseif sees then
 				if not pathBusy then goTo(lastSeen) end
-			elseif now - lastSeenAt > 4 then
+			elseif now - lastSeenAt > 2.5 then
 				setState("search") investigatePos = lastSeen
 				dadSay(pick(LINES.lost), 3)
 			elseif arrived() and not pathBusy and lastSeen then

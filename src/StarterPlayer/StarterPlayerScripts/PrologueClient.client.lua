@@ -232,6 +232,13 @@ local function run()
 		gui.Enabled = false
 		return
 	end
+	-- players who finished Chapter 1 pick a chapter first (the Chapters script shows the menu)
+	local t0 = os.clock()
+	while player:GetAttribute("DataLoaded") == nil and os.clock() - t0 < 8 do task.wait(0.1) end
+	if player:GetAttribute("Ch1Done") then
+		while player:GetAttribute("ChapterPick") == nil do task.wait(0.1) end
+		if player:GetAttribute("ChapterPick") ~= 1 then gui.Enabled = false return end
+	end
 	local char = player.Character or player.CharacterAdded:Wait()
 	char:WaitForChild("HumanoidRootPart")
 	task.wait(1)
